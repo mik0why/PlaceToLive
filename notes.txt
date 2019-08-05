@@ -1,0 +1,20 @@
+World's Biggest Airline:
+
+https://www.worldatlas.com/articles/the-world-s-largest-airlines-by-passengers-carried.html
+
+
+
+
+Factors to Consider:
+
+* salary (+ after taxes?)
+* distance from home
+* # days off
+* official language spoken
+* taxes
+* weather
+* HDI (4 categories)
+* crime rate?
+* life expenses (koszty zycia)
+* life expectancy
+* healthcare (position in some ranking)
