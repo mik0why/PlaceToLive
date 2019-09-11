@@ -5,10 +5,11 @@ I. Data from the user
 part 1: info about yourself
 
 Please enter your occupation
--- should there be a list intially?
+-- should there be a list intially? i think so - to match the jobs from the job website
 
 Please enter your country, (state), and hometown
 -- if: country == USA, then enable state to be chosen
+	not necessary but will look cool
 
 ////////////////////////////////////////////////////////////////////////
 part 2: what is important to you?
@@ -16,7 +17,7 @@ select how important is each of these for you, on a 1-10 scale.
 * Salary (per month or per year)
 * Proximity to Home
 * Days off a year
-* National Language same as yours
+* National Language same as yours - but then would have to ask for languages
 * Country's HDI
 * Sunny Weather (average ??? C / ??? F yearly) - should give more info?
 * Crime Rate
@@ -25,21 +26,28 @@ select how important is each of these for you, on a 1-10 scale.
 * Taxes
 
 
-Please enter your occupation 
-(should I have a list initally?)
-
 ////////////////////////////////////////////////////////////////////////
 part 3: data from the web
 
+Need to account for a case when there is no data for some countries (ex healthcare)
+
 Need to get each of these from various sources (use rankings?)
+
+under dev:
+	* Weather (https://en.wikipedia.org/wiki/List_of_countries_by_average_yearly_temperature)
+		now working on the part which scrapes each td tag so every country gets the right value
+		btw isn't this all gonna be converted to a Jupyter Notebook file at some point?
+		and think about the Java use, maybe for creating the GUI?
+
+
+	* salary (salaryexplorer.com) (+ after taxes?)
+	
+
+
 ez:
-	* HDI
-	* Healthcare (Healthcare Access and Quality Index)
-	* Weather
 	* crime rate
 	* life expenses
 	* life expectancy
-
 
 req manual scraping
 	* # days off	
@@ -47,14 +55,27 @@ req manual scraping
 	* taxes
 	---
 	* distance from home
-	* salary (+ after taxes?)
+
+----
+done but can add changes:
+* Healthcare - i think it's done; for a country not listed, give a minimal score
+	should this be done in the scraper or outisde the program?
+
+DONE:
+* HDI
 
 
 
 
+Issues:
+* Weather - need the user to specify what they prefer
+	need to divide countries based on their yearly average temperature
+
+* Country not listed (HC) - give a minimal score?
 
 -----
-For tomorrow (6/8):
+Upcoming tasks:
+
 * scrape the easy data into excel files
 * read about designing a drop-down menu in Python
 * decide how to create bins & combine the first 9 categories into one table
@@ -66,7 +87,7 @@ Maybe: please choose 4 categories that you consider very important
 
 Will we need to compute the results for each country?
 And simply adjust depending on the weights?
-^ that sounds like a good idea - would be good to have a dataframe with all variables
+^ this feels like a good idea - would be good to have a dataframe with all variables
 	and the weights are updated by the user. then the math is done to come up with 
 	a new table which does not inlcude the data that needs to be scraped with each
 	query:
