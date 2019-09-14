@@ -46,12 +46,9 @@ under dev:
 
 	
 ez:
-	* crime rate (global peace rate)
 	* life expenses
-	* life expectancy
 
 req manual scraping
-	* official language spoken
 	* taxes
 	* salary (salaryexplorer.com) (+ after taxes?)
 	---
@@ -59,14 +56,15 @@ req manual scraping
 
 ----
 done but can add changes:
+	* safety(iii) - official language spoken - problem with utf characters in Excel
 
 DONE:
 * Healthcare - i think it's done; for a country not listed, give a minimal score
 * HDI
 * Weather 
 * # days off	
-
-
+* safety
+* safety(ii) - life expectancy
 
 
 
@@ -127,5 +125,5 @@ and then each continent is given some preference
 
 -----
 display country with its characteristics at the end?
-
+list.indexOf[country] - sth like that
 '''
