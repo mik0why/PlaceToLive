@@ -1,5 +1,11 @@
 import Pandas as pd
 '''
+
+If there's ~206 countries, maybe divide each category into 10
+and see to which category does a country belong?
+maybe just into 5? (excellent, good, average, below average, poor)
+
+
 I. Data from the user
 ////////////////////////////////////////////////////////////////////////
 part 1: info about yourself
@@ -32,37 +38,34 @@ part 3: data from the web
 Need to account for a case when there is no data for some countries (ex healthcare)
 
 Need to get each of these from various sources (use rankings?)
-
-under dev:
-	* Weather (https://en.wikipedia.org/wiki/List_of_countries_by_average_yearly_temperature)
-		now working on the part which scrapes each td tag so every country gets the right value
 		btw isn't this all gonna be converted to a Jupyter Notebook file at some point?
 		and think about the Java use, maybe for creating the GUI?
 
 
-	* salary (salaryexplorer.com) (+ after taxes?)
+under dev:
+
 	
-
-
 ez:
-	* crime rate
+	* crime rate (global peace rate)
 	* life expenses
 	* life expectancy
 
 req manual scraping
-	* # days off	
 	* official language spoken
 	* taxes
+	* salary (salaryexplorer.com) (+ after taxes?)
 	---
 	* distance from home
 
 ----
 done but can add changes:
-* Healthcare - i think it's done; for a country not listed, give a minimal score
-	should this be done in the scraper or outisde the program?
 
 DONE:
+* Healthcare - i think it's done; for a country not listed, give a minimal score
 * HDI
+* Weather 
+* # days off	
+
 
 
 
@@ -119,6 +122,8 @@ http://hdr.undp.org/en/composite/HDI - depending on each category
 
 *health care
 
++++ the user should also be able to rank the continents (from most to least preferable)
+and then each continent is given some preference
 
 -----
 display country with its characteristics at the end?

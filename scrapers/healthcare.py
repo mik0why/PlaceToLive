@@ -17,8 +17,6 @@ for row in table.findAll('tr'):
 	cell_list = []
 	cell_list.append(str(val))
 	for cell in row.findAll('td'):
-#		print("id found : ", cell.text ,"\n")
-#		cell_list.append(val)
 		txt = cell.text.encode('utf-8')
 		if txt != '':
 			cell_list.append(txt)
