@@ -1,6 +1,9 @@
 import Pandas as pd
 '''
 
+How to handle a case when can't establish a connection
+to one of the websites?
+
 If there's ~206 countries, maybe divide each category into 10
 and see to which category does a country belong?
 maybe just into 5? (excellent, good, average, below average, poor)
@@ -43,13 +46,13 @@ Need to get each of these from various sources (use rankings?)
 
 
 under dev:
-
+	* taxes
 	
 ez:
 	* life expenses
 
 req manual scraping
-	* taxes
+
 	* salary (salaryexplorer.com) (+ after taxes?)
 	---
 	* distance from home
