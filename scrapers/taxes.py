@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 from BeautifulSoup import BeautifulSoup
 import requests
 import csv
@@ -15,14 +15,16 @@ i = 0
 for row in table.findAll('tr'):
 	cell_list = []
 	if row.find('td') is not None: 
-		country = row.find('a').contents[0]#.text#.encode('utf-8')
-		value  = country.findNext('td').text#.encode('utf-8')
-		print i, country
-		#print i, country.find('a').contents[0], value
+		country = row.findAll('a')[0].contents[0].string	# if this doesn't work then just add the "string" part separately
+		value  = country.findNext('td').text.encode('utf-8') # just for now
+		country = country.string.replace('\r\n', '').encode('utf-8').strip()#[0].contents
+		
+#		print i, country
 		if i>0: #not sure if necessary
 			cell_list.append(i)
-			cell_list.append(row.find('a').contents[0]) #before: .find('a').contents[0]) #encode text - for both of these
-			cell_list.append(value)
+			cell_list.append(country) #before: .find('a').contents[0]) #encode text - for both of these
+			cell_list.append(value) #just for now
+			print cell_list
 		#there's a slight problem with Luxembourg but it shouldn't matter bc eventually it's all just gonna be uploaded to a larger table (for days off)
 	i = i+1
 	row_list.append(cell_list)
