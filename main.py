@@ -1,4 +1,31 @@
-import Pandas as pd
+#import Pandas as pd
+from salary import wage_scrape
+
+
+print "From the list below, enter a number which corresponds to your field"
+print "jobs?"
+
+#actually can just select a number but that's sth to think about later
+#bc ideally it will just click on a button
+
+
+job_idx = wage_scrape("Marketing")
+#then should be able to select a specific subcategory
+#maybe not necessarily need to get all the values (although there should be an easy way)
+
+#scrape_all_subfunctions(job_idx) #so then can select from this as well
+#scrape_all_subfunctions(wage_scrape("Marketing")) 
+
+#at least select a few most representative
+
+
+
+
+
+
+#how to wait for user imput?
+
+
 '''
 
 How to handle a case when can't establish a connection
@@ -46,7 +73,7 @@ Need to get each of these from various sources (use rankings?)
 
 
 under dev:
-	* taxes
+
 	
 ez:
 	* life expenses
@@ -62,6 +89,7 @@ done but can add changes:
 	* safety(iii) - official language spoken - problem with utf characters in Excel
 
 DONE:
+* taxes
 * Healthcare - i think it's done; for a country not listed, give a minimal score
 * HDI
 * Weather 
