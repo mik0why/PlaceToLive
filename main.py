@@ -5,6 +5,8 @@ from salary import wage_scrape
 print "From the list below, enter a number which corresponds to your field"
 print "jobs?"
 
+#should the connections be in try-catch blocks?
+
 #actually can just select a number but that's sth to think about later
 #bc ideally it will just click on a button
 

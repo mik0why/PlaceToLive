@@ -2,7 +2,7 @@
 from BeautifulSoup import BeautifulSoup
 import requests
 import csv
-
+#To-Do: the conversion between each currency to USD dollars
 
 def wage_scrape(job_type):
 	jobs = {
@@ -69,54 +69,48 @@ def wage_scrape(job_type):
 
 	scrape_to_csv(value) #ok for now but later will be modified
 
-#wage_scrape("Marketing")
-
-#now import all the salaries from around the world to the doc
-
-
 def scrape_to_csv(idx):
-	#step 1 - organize all the countries
-	'''
-	url = "http://www.salaryexplorer.com"
-	soup = BeautifulSoup(url)
-	ctr = soup.find('div', attrs = {"class": "whiteblock"})
-	print ctr
-	'''
-
-
+	row_list = []
 	for i in range(244):
+		col_list = []
+		
 		url = "http://www.salaryexplorer.com/salary-survey.php?loc=" + str(i) + "&loctype=1&job=" + str(idx) + "&jobtype=1"
 		response = requests.get(url) #three crucial lines for BeautifulSoup to work
 		html = response.content
 		soup = BeautifulSoup(html)
+
+
 		yah = soup.find('div', attrs = {"class" : "youarehere"})
 		country = yah.findAll('a')[0].contents[0].string
-		print country
+		if country != "All Jobs": 
+			slr = soup.find('div', attrs = {"class" : "salaryblock floatedsalary"}) #getting the salary
+			wage_curr = str.split(slr.contents[2].encode('utf-8'))
+			print country, wage_curr[0], wage_curr[1] #number
+			url2 = "https://www.xe.com/currencyconverter/convert/?Amount=" + wage_curr[0].replace(",", "") + "&From=" + wage_curr[1] + "&To=USD"
+			print url2
+			resp2 = requests.get(url2)
+			html_2 = resp2.content
+			soup2 = BeautifulSoup(html_2)
+			rate = soup2.find('div', attrs = {"id" : "reactContainer"}) #up to here ok, but later idk why it doesn't work
+			rate_2 = rate.find('div')
 
-		slr = soup.find('div', attrs = {"class" : "salaryblock floatedsalary"})
-		print slr #get the content of the img tag?
-		#why does it print "All Jobs" initially?
-
-
-		#	if country == "All Jobs":
-			#ignore somewhow?
-			#btw decide on which countries should be ignored bc not present in other tables
-			#for some, ex. Vatican City State, might add to the table with a changed name (ex. Vatican)
-			#salary
-			# currency
-
-	#print url
-	#print yah
-	#print i,
-	 
-# loc needs to iterate
-#job is obtained from 
-#scrape_to_csv(40)
+			#not finding this div
+			print rate_2
 
 
-		'''
-		outfile = open("./taxes.csv", "wb")
-		writer = csv.writer(outfile, delimiter = ';')
-		writer.writerows(row_list)
-		reader = csv.reader(outfile)
-		'''
+			col_list.append(i)
+			col_list.append(country)
+			col_list.append(wage_curr[0].replace(",", "")) #be careful with all that replacing
+			col_list.append(wage_curr[1])
+			#col_list.append(convRate)
+		row_list.append(col_list)
+
+
+#append each currency converter to the col_list - but how to do it for the existing ones?
+
+
+
+	outfile = open("./salary.csv", "wb")
+	writer = csv.writer(outfile, delimiter = ';')
+	writer.writerows(row_list)
+	reader = csv.reader(outfile)
