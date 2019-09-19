@@ -64,7 +64,7 @@ def wage_scrape(job_type):
 
 	for item in jobs.keys():
 		if jobs[item] == job_type:
-			return item
+			value = item
 
 
 	scrape_to_csv(value) #ok for now but later will be modified
@@ -75,45 +75,48 @@ def wage_scrape(job_type):
 
 
 def scrape_to_csv(idx):
+	#step 1 - organize all the countries
+	'''
+	url = "http://www.salaryexplorer.com"
+	soup = BeautifulSoup(url)
+	ctr = soup.find('div', attrs = {"class": "whiteblock"})
+	print ctr
+	'''
+
+
 	for i in range(244):
 		url = "http://www.salaryexplorer.com/salary-survey.php?loc=" + str(i) + "&loctype=1&job=" + str(idx) + "&jobtype=1"
-		print url
+		response = requests.get(url) #three crucial lines for BeautifulSoup to work
+		html = response.content
+		soup = BeautifulSoup(html)
+		yah = soup.find('div', attrs = {"class" : "youarehere"})
+		country = yah.findAll('a')[0].contents[0].string
+		print country
+
+		slr = soup.find('div', attrs = {"class" : "salaryblock floatedsalary"})
+		print slr #get the content of the img tag?
+		#why does it print "All Jobs" initially?
+
+
+		#	if country == "All Jobs":
+			#ignore somewhow?
+			#btw decide on which countries should be ignored bc not present in other tables
+			#for some, ex. Vatican City State, might add to the table with a changed name (ex. Vatican)
+			#salary
+			# currency
+
+	#print url
+	#print yah
+	#print i,
+	 
 # loc needs to iterate
 #job is obtained from 
-
-
 #scrape_to_csv(40)
 
 
-'''
-url = 'https://tradingeconomics.com/country-list/personal-income-tax-rate'
-response = requests.get(url)	
-
-html = response.content
-soup = BeautifulSoup(html)
-table = soup.find('table', attrs = {"class": "table table-hover"})
-
-row_list = []
-i = 0
-for row in table.findAll('tr'):
-	cell_list = []
-	if row.find('td') is not None: 
-		country = row.findAll('a')[0].contents[0].string	# if this doesn't work then just add the "string" part separately
-		value  = country.findNext('td').text.encode('utf-8') # just for now
-		country = country.string.replace('\r\n', '').encode('utf-8').strip()#[0].contents
-#		print i, country
-		if i>0: #not sure if necessary
-			cell_list.append(i)
-			cell_list.append(country) #before: .find('a').contents[0]) #encode text - for both of these
-			cell_list.append(value) #just for now
-			print cell_list
-		#there's a slight problem with Luxembourg but it shouldn't matter bc eventually it's all just gonna be uploaded to a larger table (for days off)
-	i = i+1
-	row_list.append(cell_list)
-
-
-outfile = open("./taxes.csv", "wb")
-writer = csv.writer(outfile, delimiter = ';')
-writer.writerows(row_list)
-reader = csv.reader(outfile)
-'''
+		'''
+		outfile = open("./taxes.csv", "wb")
+		writer = csv.writer(outfile, delimiter = ';')
+		writer.writerows(row_list)
+		reader = csv.reader(outfile)
+		'''
