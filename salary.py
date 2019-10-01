@@ -2,7 +2,9 @@
 from BeautifulSoup import BeautifulSoup
 import requests
 import csv
+from lxml.html.soupparser import fromstring
 #To-Do: the conversion between each currency to USD dollars
+#status code 200 - successful req
 
 def wage_scrape(job_type):
 	jobs = {
@@ -71,7 +73,7 @@ def wage_scrape(job_type):
 
 def scrape_to_csv(idx):
 	row_list = []
-	for i in range(244):
+	for i in range(2): #TODO changed from 244
 		col_list = []
 		
 		url = "http://www.salaryexplorer.com/salary-survey.php?loc=" + str(i) + "&loctype=1&job=" + str(idx) + "&jobtype=1"
@@ -88,15 +90,22 @@ def scrape_to_csv(idx):
 			print country, wage_curr[0], wage_curr[1] #number
 			url2 = "https://www.xe.com/currencyconverter/convert/?Amount=" + wage_curr[0].replace(",", "") + "&From=" + wage_curr[1] + "&To=USD"
 			print url2
-			resp2 = requests.get(url2)
-			html_2 = resp2.content
-			soup2 = BeautifulSoup(html_2)
+			#resp2 = requests.get(url2)
+			html_2 = requests.get(url2).content #.content
+			#print html_2 #.content
+			soup2 = BeautifulSoup(html_2, 'html.parser')
+			#maybe data is invalid?
+
+			#soup2 = fromstring(BeautifulSoup(html_2))
+			print soup2
+			'''
 			rate = soup2.find('div', attrs = {"id" : "reactContainer"}) #up to here ok, but later idk why it doesn't work
-			rate_2 = rate.find('div')
-
+			if rate is not None:
+				rate_2 = rate.find('div')
+				print rate_2
 			#not finding this div
-			print rate_2
-
+			print rate
+			'''
 
 			col_list.append(i)
 			col_list.append(country)
