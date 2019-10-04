@@ -3,14 +3,18 @@ from bs4 import BeautifulSoup
 import requests
 import csv
 from lxml.html.soupparser import fromstring
+import json
+import sys
 #To-Do: the conversion between each currency to USD dollars
 #status code 200 - successful req
 # req packages: google
 
-try:
-	from googlesearch import search
-except ImportError:
-	print("No module named googlesearch")
+
+
+def get_key():
+	key_file = open("key.txt")
+	return key_file.readline().rstrip()
+
 
 def wage_scrape(job_type):
 	jobs = {
@@ -78,6 +82,54 @@ def wage_scrape(job_type):
 	scrape_to_csv(value) #ok for now but later will be modified
 
 def scrape_to_csv(idx):
+
+#	print get_key()
+
+
+	#obj = "http://data.fixer.io/api/symbols ? access_key = " + get_key()
+	obj = "http://data.fixer.io/api/latest?access_key="+ get_key()
+
+	print obj
+	resp = requests.get(obj)
+	data = resp.json()
+	entries = json.dumps(data.items()[3])
+	#data = json.dump(data, sys.stdout)["USD"]	
+	print entries
+
+	start = 0
+	end =  0
+	all_str =[]
+	curr_str = []
+	
+	for i in range(len(entries)):
+		start = end
+		if entries[i] != ',':
+			curr_str.append(entries[i])
+		else:
+			end = i
+			all_str.append("".join(curr_str))
+
+			curr_str = []
+
+
+	for i in range(len(all_str)):
+		if "USD" in all_str[i]:
+			eur_usd = all_str[i][8:] # USD to EUR
+		elif 
+			#i tutaj dodaj aktualna currency na eur
+			#potem zamien :)
+
+			print val
+
+
+
+
+	#print data	
+
+
+	#print data.items().get("USD")
+	#print data['rates']
+
 	row_list = []
 	for i in range(2): #TODO changed from 244
 		col_list = []
@@ -95,19 +147,8 @@ def scrape_to_csv(idx):
 			wage_curr = str.split(slr.contents[2].encode('utf-8'))
 			print country, wage_curr[0], wage_curr[1] #number
 
-
-			
 			entry = wage_curr[0] + " "  + wage_curr[1] + " to USD"
-			print entry
-
-			res = search(entry, tld = "com", num = 2, stop = 1, pause = 2)
-			print res
-
-			for el in res:
-				print el
-			
-			url2 = "https://www.x-rates.com/calculator/?from=" + wage_curr[1] + "&to=USD&amount=" + wage_curr[0]
-			#print url2
+			print entry.encode("utf-8")
 
 
 			#look into fixer.io
