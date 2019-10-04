@@ -83,43 +83,7 @@ def wage_scrape(job_type):
 
 def scrape_to_csv(idx):
 
-#	print get_key()
 
-
-	#obj = "http://data.fixer.io/api/symbols ? access_key = " + get_key()
-	obj = "http://data.fixer.io/api/latest?access_key="+ get_key()
-
-	print obj
-	resp = requests.get(obj)
-	data = resp.json()
-	entries = json.dumps(data.items()[3])
-	#data = json.dump(data, sys.stdout)["USD"]	
-	print entries
-
-	start = 0
-	end =  0
-	all_str =[]
-	curr_str = []
-	
-	for i in range(len(entries)):
-		start = end
-		if entries[i] != ',':
-			curr_str.append(entries[i])
-		else:
-			end = i
-			all_str.append("".join(curr_str))
-
-			curr_str = []
-
-
-	for i in range(len(all_str)):
-		if "USD" in all_str[i]:
-			eur_usd = all_str[i][8:] # USD to EUR
-		elif 
-			#i tutaj dodaj aktualna currency na eur
-			#potem zamien :)
-
-			print val
 
 
 
@@ -131,7 +95,7 @@ def scrape_to_csv(idx):
 	#print data['rates']
 
 	row_list = []
-	for i in range(2): #TODO changed from 244
+	for i in range(5): #TODO changed from 244
 		col_list = []
 		
 		url = "http://www.salaryexplorer.com/salary-survey.php?loc=" + str(i) + "&loctype=1&job=" + str(idx) + "&jobtype=1"
@@ -180,6 +144,88 @@ def scrape_to_csv(idx):
 			#col_list.append(convRate)
 		row_list.append(col_list)
 
+#	print get_key()
+
+
+	#obj = "http://data.fixer.io/api/symbols ? access_key = " + get_key()
+	obj = "http://data.fixer.io/api/latest?access_key="+ get_key()
+
+	#print obj
+
+
+
+	resp = requests.get(obj)
+	data = resp.json()
+	entries = json.dumps(data.items()[3])
+	#data = json.dump(data, sys.stdout)["USD"]	
+	#print entries
+
+	start = 0
+	end =  0
+	all_str =[]
+	curr_str = []
+	
+	for i in range(len(entries)):
+		start = end
+		if entries[i] != ',':
+			curr_str.append(entries[i])
+		else:
+			end = i
+			all_str.append("".join(curr_str))
+
+			curr_str = []
+
+	print "currency: " + wage_curr[1]
+
+	for i in range(len(all_str)):
+		if "USD" in all_str[i]:
+			eur_usd = all_str[i][8:] # USD to EUR 
+		elif wage_curr[1] in all_str[i]:
+			exch_curr = all_str[i]
+			#look into how this is extracted, has extra symbol
+			# but FIRST: take a step back and re-organize this method 
+
+
+	print "got : " + eur_usd + " , " + exch_curr
+
+	#value = []
+
+
+	#case when the currency is EUR
+	print exch_curr
+
+
+	if "EUR" in exch_curr:
+		print "juro!!!"
+		ex_rate = float(eur_usd)
+		ex_val = float(wage_curr[0].replace(',', ""))
+
+	else:
+		end_point = len(exch_curr) - 1
+		start_point = 0
+		for i in range(len(exch_curr)):
+			if(exch_curr[i].isdigit()):
+				start_point = i
+				break
+		
+			print "length : {} + start: {} + end : {}".format(len(exch_curr), start_point, end_point)
+
+
+			ex_val = exch_curr[start_point:end_point]
+			print ex_val
+			print float(ex_val) / 2.0
+			ex_rate = float(eur_usd) / float(ex_val)
+
+	wage_curr[0] = wage_curr[0].replace(',', "")
+
+	print "{} val: {}\n USD val : {}".format(wage_curr[1], ex_val, eur_usd)
+	print" {} to USD: {}".format(wage_curr[1], ex_rate)
+	print"income : {}".format(float(wage_curr[0]) * ex_rate) #the actual income in USD
+
+			#i tutaj dodaj aktualna currency na eur
+			#potem zamien :)
+
+		#	print val
 
 #append each currency converter to the col_list - but how to do it for the existing ones?
 
