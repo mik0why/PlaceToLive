@@ -11,6 +11,8 @@ print "jobs?"
 #bc ideally it will just click on a button
 
 
+#small changes
+
 job_idx = wage_scrape("Marketing")
 #then should be able to select a specific subcategory
 #maybe not necessarily need to get all the values (although there should be an easy way)
