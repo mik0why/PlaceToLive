@@ -212,15 +212,6 @@ def scrape_to_csv(idx):
 
 		row_list.append(col_list)
 
-#	print get_key()
-
-
-
-
-			#i tutaj dodaj aktualna currency na eur
-			#potem zamien :)
-
-		#	print val
 
 #append each currency converter to the col_list - but how to do it for the existing ones?
 
@@ -231,7 +222,8 @@ def scrape_to_csv(idx):
 	writer.writerows(row_list)
 	reader = csv.reader(outfile)
 
+'''
 	df = pd.read_csv("./salary.csv", header = None)#), delimiter=';')
 	df.rename(columns = {0: 'idx', 1: 'Country', 2: 'Salary', 3: 'Currency', 4: 'Salary[USD]'}, inplace = True)
 	df.to_csv('salary_with_idx.csv', index = True)	
-
+'''
