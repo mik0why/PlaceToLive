@@ -9,16 +9,10 @@ import pandas as pd
 import os
 #To-Do: the conversion between each currency to USD dollars
 #TO-DO: problem with Virgin Islands (British & US)
-#status code 200 - successful req
-# req packages: google
-
-
 
 def get_key():
 	key_file = open("key.txt")
 	return key_file.readline().rstrip()
-
-
 def wage_scrape(job_type):
 	jobs = {
 		1: "Information Technology",
@@ -80,22 +74,7 @@ def wage_scrape(job_type):
 	for item in jobs.keys():
 		if jobs[item] == job_type:
 			value = item
-
-
-if(!os.path.isfile('sorted_salaries.csv'))
-	if(!os.path.isfile('./salary.csv')):
-		scrape_to_csv(value) #scrape first
-	#organize the salaries
-
-
 def scrape_to_csv(idx):
-
-
-	#print data	
-
-
-	#print data.items().get("USD")
-	#print data['rates']
 
 	row_list = []
 	for i in range(244): #TODO changed from 244
@@ -117,29 +96,6 @@ def scrape_to_csv(idx):
 
 			entry = wage_curr[0] + " "  + wage_curr[1] + " to USD"
 			print entry.encode("utf-8")
-
-
-			#look into fixer.io
-
-
-
-			#print url2
-			#resp2 = requests.get(url2)
-			#html_2 = requests.get(url2).content #.content
-			#print html_2 #.content
-			#soup2 = BeautifulSoup(html_2, 'html5lib')#, 'html.parser')
-			#maybe data is invalid?
-
-			#soup2 = fromstring(BeautifulSoup(html_2))
-			#print soup2
-			'''
-			rate = soup2.find('div', attrs = {"id" : "reactContainer"}) #up to here ok, but later idk why it doesn't work
-			if rate is not None:
-				rate_2 = rate.find('div')
-				print rate_2
-			#not finding this div
-			print rate
-			'''
 
 			col_list.append(i)
 			col_list.append(country)
@@ -215,20 +171,25 @@ def scrape_to_csv(idx):
 
 
 		row_list.append(col_list)
-	file_rewrite("./salary.csv", ';')
-
 	outfile = open("./salary.csv", "wb")
 	writer = csv.writer(outfile, delimiter = ';')
 	writer.writerows(row_list)
 	reader = csv.reader(outfile)
-
-def file_rewrite(file, delimiter):
-
-
 def csv_salary_organize():
+	df = pd.read_csv("./salary.csv", header = None, delimiter=';')
+	df.rename(columns = {0: 'idx', 1: 'Country', 2: 'Salary', 3: 'Currency', 4: 'Salary[USD]'}, inplace = True)
+	df.sort_values(by = 'Salary[USD]', inplace = True, ascending = False)
+	
+	# the last thing - reset values of 'idx'
+	df.to_excel("sorted_salaries.xlsx", index = False) #should it have the prof in the name?
+	'''
+	df.to_csv("sorted_salaries.csv", index = True)#, delimiter = ';')	
+	outfile = open("./sorted_salaries.csv", "wb")
+	reader = csv.reader(outfile)
+	'''
 
-df = pd.read_csv("./salary.csv", header = None)#), delimiter=';')
-df.rename(columns = {0: 'idx', 1: 'Country', 2: 'Salary', 3: 'Currency', 4: 'Salary[USD]'}, inplace = True)
-df.to_csv('salary_with_idx.csv', index = True)	
-
-
+csv_salary_organize() # just now for testing
+if(os.path.isfile('sorted_salaries.xlsx') == False): #should the name have occupation in it?
+	if(os.path.isfile('./salary.csv') == False):
+		scrape_to_csv(value) #scrape first
+	csv_salary_organize()
