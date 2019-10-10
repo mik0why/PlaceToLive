@@ -6,6 +6,7 @@ from lxml.html.soupparser import fromstring
 import json
 import sys
 import pandas as pd
+import os
 #To-Do: the conversion between each currency to USD dollars
 #TO-DO: problem with Virgin Islands (British & US)
 #status code 200 - successful req
@@ -81,7 +82,11 @@ def wage_scrape(job_type):
 			value = item
 
 
-	scrape_to_csv(value) #ok for now but later will be modified
+if(!os.path.isfile('sorted_salaries.csv'))
+	if(!os.path.isfile('./salary.csv')):
+		scrape_to_csv(value) #scrape first
+	#organize the salaries
+
 
 def scrape_to_csv(idx):
 
@@ -193,7 +198,6 @@ def scrape_to_csv(idx):
 						start_point = a
 						break
 				
-#				print "length : {} + start: {} + end : {}".format(len(exch_curr), start_point, end_point)
 
 
 				ex_val = exch_curr[start_point:end_point]
@@ -211,19 +215,20 @@ def scrape_to_csv(idx):
 
 
 		row_list.append(col_list)
-
-
-#append each currency converter to the col_list - but how to do it for the existing ones?
-
-
+	file_rewrite("./salary.csv", ';')
 
 	outfile = open("./salary.csv", "wb")
 	writer = csv.writer(outfile, delimiter = ';')
 	writer.writerows(row_list)
 	reader = csv.reader(outfile)
 
-'''
-	df = pd.read_csv("./salary.csv", header = None)#), delimiter=';')
-	df.rename(columns = {0: 'idx', 1: 'Country', 2: 'Salary', 3: 'Currency', 4: 'Salary[USD]'}, inplace = True)
-	df.to_csv('salary_with_idx.csv', index = True)	
-'''
+def file_rewrite(file, delimiter):
+
+
+def csv_salary_organize():
+
+df = pd.read_csv("./salary.csv", header = None)#), delimiter=';')
+df.rename(columns = {0: 'idx', 1: 'Country', 2: 'Salary', 3: 'Currency', 4: 'Salary[USD]'}, inplace = True)
+df.to_csv('salary_with_idx.csv', index = True)	
+
+
