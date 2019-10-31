@@ -13,7 +13,9 @@ print "jobs?"
 
 #small changes
 
-job_idx = wage_scrape("Marketing")
+job_idx = wage_scrape("Marketing") # this needs to be changed
+
+
 #then should be able to select a specific subcategory
 #maybe not necessarily need to get all the values (although there should be an easy way)
 

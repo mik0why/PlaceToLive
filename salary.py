@@ -77,7 +77,7 @@ def wage_scrape(job_type):
 def scrape_to_csv(idx):
 
 	row_list = []
-	for i in range(244): #TODO changed from 244
+	for i in range(244):
 		#maybe should print the percentage & clear the screen as in the prev project
 		col_list = []
 		
@@ -85,7 +85,6 @@ def scrape_to_csv(idx):
 		response = requests.get(url) #three crucial lines for BeautifulSoup to work
 		html = response.content
 		soup = BeautifulSoup(html, 'lxml')
-
 
 		yah = soup.find('div', attrs = {"class" : "youarehere"})
 		country = yah.findAll('a')[0].contents[0].string
