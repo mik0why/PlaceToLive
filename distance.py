@@ -8,10 +8,10 @@ cc = {} #dictionary country, capital
 #https://www.dystans.org/route.json?stops=Gdansk|NewYork
 
 
-cc["Germany"] ="Berlin"
+#cc["Germany"] ="Berlin"
 #nah not adding manually, scrape from some website
 #get 
-print(cc.get("Germany"))
+#print(cc.get("Germany"))
 
 
 def get_country_capital(table):
@@ -24,9 +24,11 @@ def get_country_capital(table):
 
 	for row in rows:
 		entry = row.text.splitlines()
-		country = entry[1].encode('utf-8')
-		capital = entry[2].encode('utf-8')
+		country = entry[1].encode('utf-8').lower()
+		capital = entry[2].encode('utf-8').lower()
 		cc[country] = capital
 
 get_country_capital(cc)
+
+
 print cc
