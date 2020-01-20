@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
 
-
 distance = 0
 cc = {} #dictionary country, capital
 #premise: for each country, compute the distance to the capital
